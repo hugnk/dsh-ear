@@ -1,0 +1,42 @@
+﻿{
+    "name":  "dsh-ear",
+    "version":  "0.1.0",
+    "description":  "大肥鱼的耳朵：自己接收录音豆推来的转写，接给 aurabot 的 QQ 角色，让她能听到主人每天说的话，并在时间快到时主动提醒。",
+    "keywords":  [
+                     "dsh",
+                     "dsh-plugin",
+                     "deepseek-harness",
+                     "aurabot",
+                     "luyindou",
+                     "recorder",
+                     "companion",
+                     "cordis"
+                 ],
+    "license":  "MIT",
+    "type":  "module",
+    "main":  "index.js",
+    "exports":  {
+                    ".":  "./index.js",
+                    "./cordis.patch.yml":  "./cordis.patch.yml",
+                    "./package.json":  "./package.json"
+                },
+    "files":  [
+                  "index.js",
+                  "src",
+                  "qq-module",
+                  "scripts",
+                  "docs",
+                  "cordis.patch.yml",
+                  "README.md",
+                  "CHANGELOG.md",
+                  "LICENSE"
+              ],
+    "engines":  {
+                    "node":  "\u003e=22"
+                },
+    "dsh":  {
+                "bundle":  {
+                               "patch":  "./cordis.patch.yml"
+                           }
+            }
+}

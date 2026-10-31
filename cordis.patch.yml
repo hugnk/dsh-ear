@@ -1,0 +1,5 @@
+# 大肥鱼的耳朵：装一个 bundle 行即可。
+# 它自己监听 8788 收录音豆推来的数据，并自动往 aurabot 里放一个很小的 QQ 侧模块。
+- insert:
+    - id: ear
+      name: dsh-ear
