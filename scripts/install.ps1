@@ -1,4 +1,4 @@
-# 一键接入 DSH profile（Windows）
+﻿# 一键接入 DSH profile（Windows）
 # 用法：powershell -ExecutionPolicy Bypass -File .\install.ps1 [-Profile desktop]
 param(
   [string]$Profile = 'desktop'

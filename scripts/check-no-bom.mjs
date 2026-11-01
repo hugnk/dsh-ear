@@ -6,7 +6,8 @@ import { join, relative } from 'node:path'
 
 const ROOT = process.cwd()
 const SKIP = new Set(['.git', 'node_modules', '.aurabot-cache'])
-const EXT = new Set(['.json', '.yml', '.yaml', '.js', '.mjs', '.ps1'])
+// .ps1 故意不查：Windows PowerShell 5.1 需要 UTF-8 BOM 才能正确读中文脚本。
+const EXT = new Set(['.json', '.yml', '.yaml', '.js', '.mjs'])
 
 function walk(dir) {
   const out = []

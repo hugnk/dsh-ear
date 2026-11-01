@@ -1,4 +1,4 @@
-# 从 DSH profile 里移除 dsh-ear（Windows）
+﻿# 从 DSH profile 里移除 dsh-ear（Windows）
 param(
   [string]$Profile = 'desktop'
 )

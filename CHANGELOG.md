@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+
+- 修复 0.1.1 的打包回退：`install.ps1` / `uninstall.ps1` 被误存成无 BOM，Windows PowerShell 5.1 会把中文按 ANSI 读、脚本解析失败。现在恢复 UTF-8 BOM（仅 `.ps1`；JSON / YAML / JS 仍然禁止 BOM）。
+- `check-no-bom.mjs` 不再检查 `.ps1`（PowerShell 5.1 需要 BOM 才能正确读中文），并在脚本里写明原因。
+
 ## 0.1.1
 
 - 修复：`install.ps1` 在 Windows PowerShell 5.1 下用 `Set-Content -Encoding UTF8` 写 profile 的 `package.json`，会带 UTF-8 BOM；DSH 重启后可能拒绝加载 `dsh-ear`，表现为 8788 不监听、QQ 侧说“今天一条没收到”。
