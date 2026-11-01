@@ -14,7 +14,7 @@ Copy-Item $pkgFile "$pkgFile.bak-ear-$(Get-Date -Format yyyyMMddHHmmss)"
 $json = Get-Content $pkgFile -Raw -Encoding UTF8 | ConvertFrom-Json
 if ($json.dependencies -and $json.dependencies.'dsh-ear') { $json.dependencies.PSObject.Properties.Remove('dsh-ear') }
 if ($json.dsh.profile.bundles) {
-  $json.dsh.profile.bundles = @($json.dsh.profile.bundles | Where-Object { $_ -ne 'dsh-ear' })
+  $json.dsh.profile.bundles = @($json.dsh.profile.bundles | Where-Object { $_ -and $_ -ne 'dsh-ear' })
 }
 [System.IO.File]::WriteAllText($pkgFile, (($json | ConvertTo-Json -Depth 20) + "`n"), $utf8)
 

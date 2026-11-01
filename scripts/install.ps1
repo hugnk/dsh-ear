@@ -40,7 +40,7 @@ $json.dependencies | Add-Member -NotePropertyName 'dsh-ear' -NotePropertyValue "
 
 if (-not $json.dsh) { $json | Add-Member -NotePropertyName dsh -NotePropertyValue ([pscustomobject]@{}) -Force }
 if (-not $json.dsh.profile) { $json.dsh | Add-Member -NotePropertyName profile -NotePropertyValue ([pscustomobject]@{}) -Force }
-$bundles = @($json.dsh.profile.bundles)
+$bundles = @($json.dsh.profile.bundles | Where-Object { $_ })
 if ($bundles -notcontains 'dsh-ear') { $bundles += 'dsh-ear' }
 $json.dsh.profile | Add-Member -NotePropertyName bundles -NotePropertyValue $bundles -Force
 
