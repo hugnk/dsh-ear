@@ -8,22 +8,30 @@
 
 **独立插件**：自己监听端口、自己存数据，不依赖「录音豆生活管家」（`dsh-luyindou`）。两个都装也可以，互不干扰。
 
+**下载**：[最新 Release](https://github.com/hugnk/dsh-ear/releases/latest) — 下载 `dsh-ear-0.1.2.zip`，解压后运行 `scripts\install.ps1`，重启 DSH 即可。
+
 ## 安装
 
-### 方式一：GitHub / 本地目录
+### 方式一：Release zip（Windows 推荐）
+
+1. 下载 [dsh-ear-0.1.2.zip](https://github.com/hugnk/dsh-ear/releases/latest)
+2. 解压，在 PowerShell 里运行 `scripts\install.ps1`
+3. 重启 DSH，命令行敲 `/ear`
+
+### 方式二：GitHub / 本地目录
 
 在 DSH 的 profile 里加一份依赖，并把它加进 bundles：
 
 ```json
 {
-  "dependencies": { "dsh-ear": "github:你的用户名/dsh-ear" },
+  "dependencies": { "dsh-ear": "github:hugnk/dsh-ear" },
   "dsh": { "profile": { "bundles": ["...其他...", "dsh-ear"] } }
 }
 ```
 
 或者本地开发时用 `link:` 指向这个目录。
 
-### 方式二：npm（发布后）
+### 方式三：npm（暂未发布）
 
 ```bash
 npm i dsh-ear
