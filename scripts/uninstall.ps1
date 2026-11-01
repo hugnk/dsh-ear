@@ -1,9 +1,10 @@
-﻿# 从 DSH profile 里移除 dsh-ear（Windows）
+# 从 DSH profile 里移除 dsh-ear（Windows）
 param(
   [string]$Profile = 'desktop'
 )
 
 $ErrorActionPreference = 'Stop'
+$utf8 = New-Object System.Text.UTF8Encoding($false)
 $profileDir = Join-Path $env:USERPROFILE ".dsh\profiles\$Profile"
 $pkgFile = Join-Path $profileDir 'package.json'
 
@@ -15,7 +16,7 @@ if ($json.dependencies -and $json.dependencies.'dsh-ear') { $json.dependencies.P
 if ($json.dsh.profile.bundles) {
   $json.dsh.profile.bundles = @($json.dsh.profile.bundles | Where-Object { $_ -ne 'dsh-ear' })
 }
-($json | ConvertTo-Json -Depth 20) + "`n" | Set-Content $pkgFile -Encoding UTF8 -NoNewline
+[System.IO.File]::WriteAllText($pkgFile, (($json | ConvertTo-Json -Depth 20) + "`n"), $utf8)
 
 $link = Join-Path $profileDir 'node_modules\dsh-ear'
 if (Test-Path $link) { Remove-Item $link -Force -Recurse }

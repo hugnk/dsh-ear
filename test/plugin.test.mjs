@@ -1,4 +1,4 @@
-﻿// 插件宿主自测：用假的 ctx 跑 apply()，验证配置、监听、命令、接口、退出清理。
+// 插件宿主自测：用假的 ctx 跑 apply()，验证配置、监听、命令、接口、退出清理。
 // 运行：node test/plugin.test.mjs
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'

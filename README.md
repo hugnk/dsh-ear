@@ -87,7 +87,12 @@ node test/offline.test.mjs   # 协议 / 去重 / 提醒抽取 / HTTP
 node test/module.test.mjs    # QQ 侧模块（假 api）
 ```
 
-## 已知限制（0.1.0）
+## 排错
+
+- **重启 DSH 后 8788 不监听、QQ 侧说“今天一条没收到”**：多半是 `package.json` 被写入了 UTF-8 BOM，DSH 解析失败后拒绝加载插件。重跑 `scripts\install.ps1`（会自动去掉 BOM），或确认 `package.json` 开头不是字节 `EF BB BF`；然后重启 DSH。
+- **手机能连上但没数据**：先看 `http://<电脑IP>:8788/health` 或转发器端口的 `/health`；`today` 不增长就是插件没在监听，不是 App 的问题。
+
+## 已知限制（0.1.x）
 
 - 提醒只认**当天**的时间（“下午三点”），不猜“明天/后天”；
 - 没有网页面板，用 `/ear` 命令；

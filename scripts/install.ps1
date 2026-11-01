@@ -1,4 +1,4 @@
-﻿# 一键接入 DSH profile（Windows）
+# 一键接入 DSH profile（Windows）
 # 用法：powershell -ExecutionPolicy Bypass -File .\install.ps1 [-Profile desktop]
 param(
   [string]$Profile = 'desktop'
@@ -6,6 +6,21 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $src = Split-Path -Parent $PSScriptRoot
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+
+# DSH 用 JSON.parse 读 package.json；文件开头的 BOM 会让它直接报错、插件被拒绝加载。
+# 从 zip / 旧版本装进来时先自愈一次。
+$pluginPkg = Join-Path $src 'package.json'
+if (Test-Path $pluginPkg) {
+  $bytes = [System.IO.File]::ReadAllBytes($pluginPkg)
+  if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+    $text = [System.Text.Encoding]::UTF8.GetString($bytes)
+    if ($text.Length -gt 0 -and [int][char]$text[0] -eq 0xFEFF) { $text = $text.Substring(1) }
+    [System.IO.File]::WriteAllText($pluginPkg, $text, $utf8)
+    Write-Host "已去掉插件 package.json 的 BOM" -ForegroundColor Yellow
+  }
+}
+
 $profileDir = Join-Path $env:USERPROFILE ".dsh\profiles\$Profile"
 $pkgFile = Join-Path $profileDir 'package.json'
 
@@ -29,7 +44,11 @@ $bundles = @($json.dsh.profile.bundles)
 if ($bundles -notcontains 'dsh-ear') { $bundles += 'dsh-ear' }
 $json.dsh.profile | Add-Member -NotePropertyName bundles -NotePropertyValue $bundles -Force
 
-($json | ConvertTo-Json -Depth 20) + "`n" | Set-Content $pkgFile -Encoding UTF8 -NoNewline
+[System.IO.File]::WriteAllText($pkgFile, (($json | ConvertTo-Json -Depth 20) + "`n"), $utf8)
+$written = [System.IO.File]::ReadAllBytes($pkgFile)
+if ($written.Length -ge 3 -and $written[0] -eq 0xEF -and $written[1] -eq 0xBB -and $written[2] -eq 0xBF) {
+  throw "写出来的 package.json 还是带 BOM：$pkgFile"
+}
 
 $nm = Join-Path $profileDir 'node_modules'
 New-Item -ItemType Directory -Path $nm -Force | Out-Null

@@ -1,6 +1,6 @@
-﻿{
+{
     "name":  "dsh-ear",
-    "version":  "0.1.0",
+    "version":  "0.1.1",
     "description":  "大肥鱼的耳朵：自己接收录音豆推来的转写，接给 aurabot 的 QQ 角色，让她能听到主人每天说的话，并在时间快到时主动提醒。",
     "keywords":  [
                      "dsh",
@@ -33,6 +33,10 @@
               ],
     "engines":  {
                     "node":  "\u003e=22"
+                },
+    "scripts":  {
+                    "test":  "node test/offline.test.mjs",
+                    "check":  "node scripts/check-no-bom.mjs"
                 },
     "dsh":  {
                 "bundle":  {
